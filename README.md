@@ -16,4 +16,5 @@ $ git clone git://github.com/frankymartz/vimrc.git ~/.vim && cd ~/.vim
     - `rake` Installs vim plugins specified in the .vimrc file and snipmate-snippets.
 
 That is it!
+
 **NOTE**: If you have Vim running don't forget to source the install `:source $MYVIMRC` from inside vim or just restart.
