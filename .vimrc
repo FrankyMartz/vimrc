@@ -11,6 +11,7 @@ Bundle 'gmarik/vundle'
 " Git
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-git'
+Bundle 'Threesome'
 
 " System
 Bundle 'msanders/snipmate.vim'
@@ -20,6 +21,8 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'surround.vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'mileszs/ack.vim'
+Bundle 'TaskList.vim'
+Bundle 'Tagbar'
 
 " Ruby
 Bundle 'vim-ruby/vim-ruby'
@@ -33,7 +36,11 @@ Bundle 'tpope/vim-endwise'
 Bundle 'atourino/jinja.vim'
 Bundle 'vim-scripts/python_match.vim'
 
+" Non-github repos
+Bundle 'git://git.wincent.com/command-t.git'
+
 " Other
+Bundle 'git://git.ervandew.com/supertab.git'
 Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-pastie'
@@ -42,15 +49,16 @@ Bundle 'mattn/zencoding-vim'
 Bundle 'processing-snipmate'
 Bundle 'Processing'
 Bundle 'Processing-Syntax'
-Bundle 'Tagbar'
-Bundle 'SuperTab'
 Bundle 'phpcomplete.vim'
 Bundle 'Syntastic'
+Bundle 'jelera/vim-javascript-syntax'
+
 
 " Colorscheme
 "Bundle 'scrogson/vim-lithium-dark'
 
 filetype plugin indent on " required!
+"filetype plugin on
 
 " Colors
 colorscheme obsidian2
@@ -61,6 +69,7 @@ colorscheme obsidian2
 " Basic
 let mapleader = ","
 let gmapleader = ","
+"let maplocalleader = '\\'
 set ignorecase
 set smartcase
 set gdefault
@@ -100,7 +109,7 @@ set nowrap
 set textwidth=79
 set formatoptions=qrn1
 if has('gui_running')
-	set transparency=10 " transparency range 0-100
+	set transparency=4 " transparency range 0-100
 endif
 
 " Display a place holder character for tabs and trailing spaces
@@ -133,6 +142,16 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 nnoremap <leader>ft Vatzf
 " open .vimrc file
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+
+" Preview current HTML in Browser
+nnoremap <F5> :!open -a Safari %<CR><CR>
+
+" Preview current PHP in Browser via localhost
+nnoremap <S-F5> :update<Bar>!open -a Safari %:p:s?\(.\{-}/\)\{4}?http://localhost/?<CR>
+"autocmd FileType php nnoremap <F5> :update<Bar>!open -a Safari `echo http://localhost/${PWD\#*/*/*/*/*/}/%`<CR>
+
+" Run Python Script
+autocmd BufRead *.py nmap <F5> :!python %<CR>
 
 au FocusLost * :wa
 autocmd FileType php setlocal ts=4 sts=4 sw=4 noexpandtab
@@ -195,15 +214,15 @@ hi DiffChange term=reverse cterm=bold ctermbg=gray ctermfg=black
 hi DiffText term=reverse cterm=bold ctermbg=blue ctermfg=black
 hi DiffDelete term=reverse cterm=bold ctermbg=darkred ctermfg=black
 
-hi CursorLine   cterm=NONE ctermbg=black ctermfg=NONE guibg=black guifg=white
+hi CursorLine   cterm=NONE ctermbg=black ctermfg=NONE guibg=black guifg=NONE
 
 " Activate HTML snippets on PHP files
-au BufRead *.php set ft=php.html
-au BufNewFile *.php set ft=php.html
+au BufRead *.php set ft=php.html.javascript.css
+au BufNewFile *.php set ft=php.html.javascript.css
 
 " Activate Processing snippets on HTML files
-au BufRead *.html set ft=html.pde
-au BufNewFile *.html set ft=html.pde
+au BufRead *.html set ft=html.js.css.processing
+au BufNewFile *.html set ft=html.js.css.processing
 
 " Automatically save Folding in vim
 au BufWinLeave * silent! mkview
@@ -217,8 +236,11 @@ augroup END
 
 " SuperTab Setting - Tab to trigger omnicompletion
 "let g:SuperTabDefaultCompletionType = ""
+let g:SuperTabDefaultCompletionType = "context"
 
 " Syntastic Settings
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=1
 
+" Bypass E212 Can't open file for writing
+command! W w !sudo tee % > /dev/null
