@@ -36,6 +36,11 @@ Bundle 'tpope/vim-endwise'
 Bundle 'atourino/jinja.vim'
 Bundle 'vim-scripts/python_match.vim'
 
+" PHP
+Bundle 'PDV--phpDocumentor-for-Vim'
+Bundle 'phpcomplete.vim'
+Bundle 'php-cs-fixer'
+
 " Non-github repos
 Bundle 'git://git.wincent.com/command-t.git'
 
@@ -49,9 +54,9 @@ Bundle 'mattn/zencoding-vim'
 Bundle 'processing-snipmate'
 Bundle 'Processing'
 Bundle 'Processing-Syntax'
-Bundle 'phpcomplete.vim'
 Bundle 'Syntastic'
 Bundle 'jelera/vim-javascript-syntax'
+Bundle 'cocoa.vim'
 
 
 " Colorscheme
@@ -112,7 +117,7 @@ if has('gui_running')
 	set transparency=4 " transparency range 0-100
 endif
 
-" Display a place holder character for tabs and trailing spaces
+"Display a place holder character for tabs and trailing spaces
 set listchars=tab:▸\ ,eol:¬
 
 " Shortcut to rapidly toggle `set list`
@@ -144,7 +149,8 @@ nnoremap <leader>ft Vatzf
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 
 " Preview current HTML in Browser
-nnoremap <F5> :!open -a Safari %<CR><CR>
+"nnoremap <F5> :!open -a Safari %<CR><CR>
+nnoremap <F5> :!open -a firefox %<CR><CR>
 
 " Preview current PHP in Browser via localhost
 nnoremap <S-F5> :update<Bar>!open -a Safari %:p:s?\(.\{-}/\)\{4}?http://localhost/?<CR>
@@ -152,6 +158,9 @@ nnoremap <S-F5> :update<Bar>!open -a Safari %:p:s?\(.\{-}/\)\{4}?http://localhos
 
 " Run Python Script
 autocmd BufRead *.py nmap <F5> :!python %<CR>
+
+" TagbarToggle
+nmap <F8> :TagbarToggle<CR>
 
 au FocusLost * :wa
 autocmd FileType php setlocal ts=4 sts=4 sw=4 noexpandtab
@@ -221,8 +230,8 @@ au BufRead *.php set ft=php.html.javascript.css
 au BufNewFile *.php set ft=php.html.javascript.css
 
 " Activate Processing snippets on HTML files
-au BufRead *.html set ft=html.js.css.processing
-au BufNewFile *.html set ft=html.js.css.processing
+au BufRead *.html set ft=html.javascript.css.processing
+au BufNewFile *.html set ft=html.javascript.css.processing
 
 " Automatically save Folding in vim
 au BufWinLeave * silent! mkview
@@ -242,5 +251,23 @@ let g:SuperTabDefaultCompletionType = "context"
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=1
 
-" Bypass E212 Can't open file for writing
-command! W w !sudo tee % > /dev/null
+"" Bypass E212 Can't open file for writing
+"command! W w !sudo tee % > /dev/null
+
+" PDV - phpDocumentor for Vim
+source ~/.vim/php-doc.vim 
+inoremap <C-P> <ESC>:call PhpDocSingle()<CR>i 
+nnoremap <C-P> :call PhpDocSingle()<CR> 
+vnoremap <C-P> :call PhpDocRange()<CR> 
+
+"autocmd FileType php set tabstop=4|set shiftwidth=4|set expandtab
+autocmd FileType php set expandtab
+
+" PHP-CS-Fixer
+let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"        " define the path to the php-cs-fixer.phar
+let g:php_cs_fixer_level = "all"                " which level ?
+let g:php_cs_fixer_config = "default"           " configuration
+let g:php_cs_fixer_php_path = "php"             " Path to PHP
+let g:php_cs_fixer_fixers_list = ""             " List of fixers
+let g:php_cs_fixer_dry_run = 0                  " Call command with dry-run option
+let g:php_cs_fixer_verbose = 0                  " Return the output of command if 1, else an inline information.
