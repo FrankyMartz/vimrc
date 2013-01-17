@@ -1,4 +1,5 @@
 set encoding=utf-8
+set guifont=Menlo\ 11
 set nocompatible " be iMproved
 filetype off            " required for Vundle
 
@@ -23,6 +24,7 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'mileszs/ack.vim'
 Bundle 'TaskList.vim'
 Bundle 'Tagbar'
+Bundle 'git://github.com/joonty/vdebug.git'
 
 " Ruby
 Bundle 'vim-ruby/vim-ruby'
@@ -63,10 +65,15 @@ Bundle 'cocoa.vim'
 "Bundle 'scrogson/vim-lithium-dark'
 
 filetype plugin indent on " required!
-"filetype plugin on
 
 " Colors
-colorscheme obsidian2
+
+colorscheme molokai
+"let g:molokai_original = 1
+syntax on
+syntax enable
+set t_Co=256
+"colorscheme obsidian2
 "colorscheme Tomorrow-Night
 "colorscheme lithium_dark
 
@@ -183,10 +190,10 @@ if has("autocmd")
     \ endif
 endif
 
-if &t_Co > 2 || has("gui_running")
+"if &t_Co > 2 || has("gui_running")
   " Enable syntax highlighting
-  syntax on
-endif
+"  syntax on
+"endif
 
 " Surround Plugin config
 let g:surround_{char2nr('-')} = "<% \r %>"
@@ -254,14 +261,9 @@ let g:syntastic_auto_loc_list=1
 "" Bypass E212 Can't open file for writing
 "command! W w !sudo tee % > /dev/null
 
-" PDV - phpDocumentor for Vim
-source ~/.vim/php-doc.vim 
-inoremap <C-P> <ESC>:call PhpDocSingle()<CR>i 
-nnoremap <C-P> :call PhpDocSingle()<CR> 
-vnoremap <C-P> :call PhpDocRange()<CR> 
-
 "autocmd FileType php set tabstop=4|set shiftwidth=4|set expandtab
-autocmd FileType php set expandtab
+autocmd FileType php set tabstop=4 shiftwidth=4 expandtab
+"autocmd FileType php set expandtab
 
 " PHP-CS-Fixer
 let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"        " define the path to the php-cs-fixer.phar
@@ -271,3 +273,14 @@ let g:php_cs_fixer_php_path = "php"             " Path to PHP
 let g:php_cs_fixer_fixers_list = ""             " List of fixers
 let g:php_cs_fixer_dry_run = 0                  " Call command with dry-run option
 let g:php_cs_fixer_verbose = 0                  " Return the output of command if 1, else an inline information.
+
+if has("gui_running")
+	" PDV - phpDocumentor for Vim
+	source ~/.vim/php-doc.vim 
+	inoremap <C-P> <ESC>:call PhpDocSingle()<CR>i 
+	nnoremap <C-P> :call PhpDocSingle()<CR> 
+	vnoremap <C-P> :call PhpDocRange()<CR> 
+
+	let g:tagbar_ctags_bin=ctags-exuberant
+	set tags=tags, ./tags, ~/.vim/mytags
+endif
