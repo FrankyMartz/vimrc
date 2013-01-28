@@ -63,16 +63,22 @@ Bundle 'cocoa.vim'
 
 " Colorscheme
 "Bundle 'scrogson/vim-lithium-dark'
+Bundle 'chriskempson/base16-vim'
 
 filetype plugin indent on " required!
 
 " Colors
 
-colorscheme molokai
-"let g:molokai_original = 1
+"colorscheme molokai
+""let g:molokai_original = 1
+
+set background=dark
+colorscheme base16-eighties
+
 syntax on
 syntax enable
 set t_Co=256
+"colorscheme solarized
 "colorscheme obsidian2
 "colorscheme Tomorrow-Night
 "colorscheme lithium_dark
