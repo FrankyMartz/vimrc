@@ -1,5 +1,5 @@
 # VIM Setup
-Hi, here is my personal .vim setup. Originally cloned from [scrogson](https://github.com/scrogson/vim-dotfiles). Feel free to clone. :)
+Hi, here is my personal .vim setup. Feel free to clone. :)
 
 ## Installation
 **NOTE**: If you have existing files in `$HOME/.vim` or `$HOME/.vimrc`, make sure you take appropriate backups before performing any of the following steps.
@@ -18,3 +18,6 @@ $ git clone git://github.com/frankymartz/vimrc.git ~/.vim && cd ~/.vim
 That is it!
 
 **NOTE**: If you have Vim running don't forget to source the install `:source $MYVIMRC` from inside vim or just restart.
+
+
+Magic stuff originally came from [scrogson](https://github.com/scrogson).
