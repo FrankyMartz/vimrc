@@ -1,136 +1,68 @@
+" Vundle and Bundle Configuration
+source ~/.vundlerc
+
 set encoding=utf-8
 set guifont=Menlo\ 11
-set nocompatible " be iMproved
-filetype off            " required for Vundle
-
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
-
-" let Vundle manage Vundle
-Bundle 'gmarik/vundle'
-
-" Git
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-git'
-Bundle 'Threesome'
-
-" System
-Bundle 'msanders/snipmate.vim'
-Bundle 'krisleech/snipmate-snippets'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'surround.vim'
-Bundle 'Raimondi/delimitMate'
-Bundle 'mileszs/ack.vim'
-Bundle 'TaskList.vim'
-Bundle 'Tagbar'
-Bundle 'git://github.com/joonty/vdebug.git'
-
-" Ruby
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'tpope/vim-rails'
-Bundle 'tpope/vim-rvm'
-Bundle 'tpope/vim-bundler'
-Bundle 'tpope/vim-rake'
-Bundle 'tpope/vim-endwise'
-
-" Python
-Bundle 'atourino/jinja.vim'
-Bundle 'vim-scripts/python_match.vim'
-
-" PHP
-Bundle 'PDV--phpDocumentor-for-Vim'
-Bundle 'phpcomplete.vim'
-Bundle 'php-cs-fixer'
-
-" Non-github repos
-Bundle 'git://git.wincent.com/command-t.git'
-
-" Other
-Bundle 'git://git.ervandew.com/supertab.git'
-Bundle 'tpope/vim-haml'
-Bundle 'tpope/vim-markdown'
-Bundle 'tpope/vim-pastie'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'mattn/zencoding-vim'
-Bundle 'processing-snipmate'
-Bundle 'Processing'
-Bundle 'Processing-Syntax'
-Bundle 'Syntastic'
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'cocoa.vim'
-
-
-" Colorscheme
-"Bundle 'scrogson/vim-lithium-dark'
-Bundle 'chriskempson/base16-vim'
-
-filetype plugin indent on " required!
 
 " Colors
-
-"colorscheme molokai
-""let g:molokai_original = 1
-
-set background=dark
-colorscheme base16-eighties
-
 syntax on
 syntax enable
 set t_Co=256
-"colorscheme solarized
-"colorscheme obsidian2
-"colorscheme Tomorrow-Night
-"colorscheme lithium_dark
-
+colorscheme base16-eighties
+set background=dark
 
 " Basic
 let mapleader = ","
 let gmapleader = ","
-"let maplocalleader = '\\'
+
+" Make searches case-sensitive only if they contain upper-case characters
 set ignorecase
 set smartcase
+
 set gdefault
+
 set incsearch
 set hlsearch
+
+" Keep more context when scrolling off the end of a buffer
 set scrolloff=3
 set title
-
 set autoindent
 set smartindent
 
 set showmode
 set showcmd
+
+" Allow backgrounding buffers without writing them, and remember marks/undo
+" for background buffers
 set hidden
+
+" Make tab completion for files/buffers act like bash
 set wildmenu
 set wildmode=list:longest
-set wildignore=*.swp,tmp,.git,*.png,*.jpg,*.gif
+set wildignore=*.swp,tmp,.git,*.png,*.jpg,*.gif,node_modules
 
 set ttyfast
 set ruler
 set laststatus=2
-set term=screen
 set modelines=0
 set backspace=indent,eol,start
-set history=100
+set history=1000
 set visualbell " no bell please
 set noerrorbells " shut up
 set nowrap
 set number
-set ruler
 set colorcolumn=80
 set cmdheight=2 " Set the command height to 2 lines
 set showmatch " Highlight closing ), >, }, ], etc...
 set undolevels=1000
-set directory=~/.vim/tmp
+set directory=/tmp
 set nowrap
 set textwidth=79
 set formatoptions=qrn1
-if has('gui_running')
-	set transparency=4 " transparency range 0-100
-endif
+set autoread " Make sure that buffers change if the file changed
 
-"Display a place holder character for tabs and trailing spaces
+" Display a place holder character for tabs and trailing spaces
 set listchars=tab:▸\ ,eol:¬
 
 " Shortcut to rapidly toggle `set list`
@@ -140,26 +72,163 @@ nmap <leader>r :set relativenumber<cr>
 " Toggle cursorline
 nmap <leader>c :set cursorline!<cr>
 
+" CtrlP configs
+map <leader>t :CtrlP<cr>
+map <leader>b :CtrlPBuffer<cr>
+" Change the files match to the top of the list
+let g:ctrlp_match_window_reversed = 0
+" Open multiple files in no more than 2 vertical splits
+let g:ctrlp_open_multiple_files = '2vjr'
+
+" Plugins
+let g:ctrlp_extensions = ['funky']
+" Function lookup
+map <leader>gf :CtrlPFunky<cr>
+
+command! W :w
+
 map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+set winwidth=84
+" We have to have a winheight bigger than we want to set winminheight. But if
+" we set winheight to be huge before winminheight, the winminheight set will
+" fail.
+set winheight=10
+set winminheight=10
+set winheight=999
+
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 inoremap jj <ESC>
+inoremap II <Esc>I
+inoremap AA <Esc>A
+inoremap OO <Esc>O
 nnoremap / /\v
 vnoremap / /\v
 nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
 vnoremap <tab> %
+
+
 " strip all trailing whitespace in the current file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 " fold tag
 nnoremap <leader>ft Vatzf
 " open .vimrc file
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+" Fix those pesky situations where you edit & need sudo to save
+cmap w!! w !sudo tee % >/dev/null
+
+
+autocmd FocusLost * :wa
+autocmd FileType php setlocal ts=4 sts=4 sw=4 noexpandtab
+autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+autocmd FileType javascript,html,css setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType jade setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType ruby,pml,erb,haml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType markdown setlocal wrap linebreak nolist
+autocmd BufNewFile,BufRead *.rss setfiletype xml
+autocmd BufNewFile,BufRead *.scss setfiletype css.scss
+autocmd BufWritePost .vimrc source %
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
+
+if has("autocmd")
+  " Enable filetype detection
+  filetype plugin indent on
+  " Restore cursor position
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+endif
+
+
+if &t_Co > 2 || has("gui_running")
+  syntax on " Enable syntax highlighting
+  set transparency=4 " transparency range 0-100
+endif
+
+" Surround Plugin config
+let g:surround_{char2nr('-')} = "<% \r %>"
+let g:surround_{char2nr('=')} = "<%= \r %>"
+let g:surround_{char2nr('8')} = "/* \r */"
+let g:surround_{char2nr('s')} = " \r "
+let g:surround_{char2nr('^')} = "/^\r$/"
+let g:surround_indent = 1
+
+
+function! ShowColors()
+  let num = 255
+  while num >= 0
+    exec 'hi col_'.num.' ctermbg='.num.' ctermfg=white'
+    exec 'syn match col_'.num.' "ctermbg='.num.':...." containedIn=ALL'
+    call append(0, 'ctermbg='.num.':....')
+    let num = num - 1
+  endwhile
+endfunction
+
+
+" Show syntax highlighting groups for word under cursor
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PROMOTE VARIABLE TO RSPEC LET
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! PromoteToLet()
+  :normal! dd
+  " :exec '?^\s*it\>'
+  :normal! P
+  :.s/\(\w\+\) = \(.*\)$/let(:\1) { \2 }/
+  :normal ==
+  " :normal! <<
+  " :normal! ilet(:
+  " :normal! f 2cl) {
+  " :normal! A }
+endfunction
+:command! PromoteToLet :call PromoteToLet()
+:map <leader>p :PromoteToLet<cr>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FOLDING
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Automatically save Folding in vim
+au BufWinLeave * silent! mkview
+au BufWinEnter * silent! loadview
+
+" Indent folding with Manual folds
+augroup vimrc
+	au BufReadPre * setlocal foldmethod=indent
+	au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
+augroup END
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PHP-CS_FIXER
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"        " define the path to the php-cs-fixer.phar
+let g:php_cs_fixer_level = "all"                " which level ?
+let g:php_cs_fixer_config = "default"           " configuration
+let g:php_cs_fixer_php_path = "php"             " Path to PHP
+let g:php_cs_fixer_fixers_list = ""             " List of fixers
+let g:php_cs_fixer_dry_run = 0                  " Call command with dry-run option
+let g:php_cs_fixer_verbose = 0                  " Return the output of command if 1, else an inline information.
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Preview current HTML in Browser
 "nnoremap <F5> :!open -a Safari %<CR><CR>
@@ -175,67 +244,16 @@ autocmd BufRead *.py nmap <F5> :!python %<CR>
 " TagbarToggle
 nmap <F8> :TagbarToggle<CR>
 
-au FocusLost * :wa
-autocmd FileType php setlocal ts=4 sts=4 sw=4 noexpandtab
-autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
-autocmd FileType javascript,html,css setlocal ts=4 sts=4 sw=4 expandtab
-autocmd FileType ruby,pml,erb,haml setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType markdown setlocal wrap linebreak nolist
-autocmd BufNewFile,BufRead *.rss setfiletype xml
-autocmd BufNewFile,BufRead *.scss setfiletype css.scss
-autocmd WinEnter * setlocal cursorline
-autocmd WinLeave * setlocal nocursorline
+" NERDTreeToggle
+nmap <F9> :NERDTreeToggle<CR>
 
-if has("autocmd")
-  " Enable filetype detection
-  filetype plugin indent on
-  " Restore cursor position
-  autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
-endif
-
-"if &t_Co > 2 || has("gui_running")
-  " Enable syntax highlighting
-"  syntax on
-"endif
-
-" Surround Plugin config
-let g:surround_{char2nr('-')} = "<% \r %>"
-let g:surround_{char2nr('=')} = "<%= \r %>"
-let g:surround_{char2nr('8')} = "/* \r */"
-let g:surround_{char2nr('s')} = " \r "
-let g:surround_{char2nr('^')} = "/^\r$/"
-let g:surround_indent = 1
-
-" ZenCoding
-let g:user_zen_expander_key = '<c-e>'
-let g:use_zen_complete_tag = 1
-let g:user_zen_settings = {
-  \  'php' : {
-  \    'extends' : 'html',
-  \    'filters' : 'c',
-  \  },
-  \  'xml' : {
-  \    'extends' : 'html',
-  \  },
-  \  'haml' : {
-  \    'extends' : 'html',
-  \  },
-  \}
-
-" Fix those pesky situations where you edit & need sudo to save
-cmap w!! w !sudo tee % >/dev/null
-
-" Status line
-set statusline=%f\ %m%=%l,\ %c\ %{fugitive#statusline()}\ %y
+" DelimitMate Esc Issue Fix
+let delimitMate_no_esc_mapping = 1
 
 hi DiffAdd term=reverse cterm=bold ctermbg=darkgreen ctermfg=black
 hi DiffChange term=reverse cterm=bold ctermbg=gray ctermfg=black
 hi DiffText term=reverse cterm=bold ctermbg=blue ctermfg=black
 hi DiffDelete term=reverse cterm=bold ctermbg=darkred ctermfg=black
-
 hi CursorLine   cterm=NONE ctermbg=black ctermfg=NONE guibg=black guifg=NONE
 
 " Activate HTML snippets on PHP files
@@ -246,15 +264,6 @@ au BufNewFile *.php set ft=php.html.javascript.css
 au BufRead *.html set ft=html.javascript.css.processing
 au BufNewFile *.html set ft=html.javascript.css.processing
 
-" Automatically save Folding in vim
-au BufWinLeave * silent! mkview
-au BufWinEnter * silent! loadview
-
-" Indent folding with Manual folds
-augroup vimrc
-	au BufReadPre * setlocal foldmethod=indent
-	au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
-augroup END
 
 " SuperTab Setting - Tab to trigger omnicompletion
 "let g:SuperTabDefaultCompletionType = ""
@@ -264,28 +273,13 @@ let g:SuperTabDefaultCompletionType = "context"
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=1
 
-"" Bypass E212 Can't open file for writing
-"command! W w !sudo tee % > /dev/null
-
-"autocmd FileType php set tabstop=4|set shiftwidth=4|set expandtab
-autocmd FileType php set tabstop=4 shiftwidth=4 expandtab
-"autocmd FileType php set expandtab
-
-" PHP-CS-Fixer
-let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"        " define the path to the php-cs-fixer.phar
-let g:php_cs_fixer_level = "all"                " which level ?
-let g:php_cs_fixer_config = "default"           " configuration
-let g:php_cs_fixer_php_path = "php"             " Path to PHP
-let g:php_cs_fixer_fixers_list = ""             " List of fixers
-let g:php_cs_fixer_dry_run = 0                  " Call command with dry-run option
-let g:php_cs_fixer_verbose = 0                  " Return the output of command if 1, else an inline information.
 
 if has("gui_running")
 	" PDV - phpDocumentor for Vim
-	source ~/.vim/php-doc.vim 
-	inoremap <C-P> <ESC>:call PhpDocSingle()<CR>i 
-	nnoremap <C-P> :call PhpDocSingle()<CR> 
-	vnoremap <C-P> :call PhpDocRange()<CR> 
+	source ~/.vim/php-doc.vim
+	inoremap <C-P> <ESC>:call PhpDocSingle()<CR>
+	nnoremap <C-P> :call PhpDocSingle()<CR>
+	vnoremap <C-P> :call PhpDocRange()<CR>
 
 	let g:tagbar_ctags_bin=ctags-exuberant
 	set tags=tags, ./tags, ~/.vim/mytags
