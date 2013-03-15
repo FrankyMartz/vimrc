@@ -73,7 +73,7 @@ nmap <leader>r :set relativenumber<cr>
 nmap <leader>c :set cursorline!<cr>
 
 " CtrlP configs
-map <leader>t :CtrlP<cr>
+map <leader>T :CtrlP<cr>
 map <leader>b :CtrlPBuffer<cr>
 " Change the files match to the top of the list
 let g:ctrlp_match_window_reversed = 0
@@ -150,7 +150,6 @@ endif
 
 if &t_Co > 2 || has("gui_running")
   syntax on " Enable syntax highlighting
-  set transparency=4 " transparency range 0-100
 endif
 
 " Surround Plugin config
@@ -275,12 +274,16 @@ let g:syntastic_auto_loc_list=1
 
 
 if has("gui_running")
+	" transparency range 0-100
+  	set transparency=4
+
 	" PDV - phpDocumentor for Vim
-	source ~/.vim/php-doc.vim
+	source ~/.vim/bundle/PDV--phpDocumentor-for-Vim/plugin/php-doc.vim
 	inoremap <C-P> <ESC>:call PhpDocSingle()<CR>
 	nnoremap <C-P> :call PhpDocSingle()<CR>
 	vnoremap <C-P> :call PhpDocRange()<CR>
 
-	let g:tagbar_ctags_bin=ctags-exuberant
+	"let g:tagbar_ctags_bin=ctags-exuberant
+	":tabnew
 	set tags=tags, ./tags, ~/.vim/mytags
 endif
