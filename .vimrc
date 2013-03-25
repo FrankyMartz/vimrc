@@ -266,7 +266,7 @@ hi CursorLine   cterm=NONE ctermbg=black ctermfg=NONE guibg=black guifg=NONE
 
 
 " SuperTab Setting - Tab to trigger omnicompletion
-"let g:SuperTabDefaultCompletionType = ""
+"let g:SuperTabDefaultCompletionType = ''
 let g:SuperTabDefaultCompletionType = "context"
 
 " Syntastic Settings
