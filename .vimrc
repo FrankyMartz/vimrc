@@ -2,7 +2,8 @@
 source ~/.vundlerc
 
 set encoding=utf-8
-set guifont=Menlo\ 11
+set fileformat=unix
+set guifont=Menlo:h11
 
 " Colors
 syntax on
@@ -240,11 +241,11 @@ nnoremap <S-F5> :update<Bar>!open -a Safari %:p:s?\(.\{-}/\)\{4}?http://localhos
 " Run Python Script
 autocmd BufRead *.py nmap <F5> :!python %<CR>
 
-" TagbarToggle
-nmap <F8> :TagbarToggle<CR>
-
 " NERDTreeToggle
-nmap <F9> :NERDTreeToggle<CR>
+nmap <F8> :NERDTreeToggle<CR>
+
+" TagbarToggle
+nmap <F9> :TagbarToggle<CR>
 
 " DelimitMate Esc Issue Fix
 let delimitMate_no_esc_mapping = 1
@@ -256,12 +257,12 @@ hi DiffDelete term=reverse cterm=bold ctermbg=darkred ctermfg=black
 hi CursorLine   cterm=NONE ctermbg=black ctermfg=NONE guibg=black guifg=NONE
 
 " Activate HTML snippets on PHP files
-au BufRead *.php set ft=php.html.javascript.css
-au BufNewFile *.php set ft=php.html.javascript.css
+"au BufRead *.php set ft=php.html.javascript.css
+"au BufNewFile *.php set ft=php.html.javascript.css
 
 " Activate Processing snippets on HTML files
-au BufRead *.html set ft=html.javascript.css.processing
-au BufNewFile *.html set ft=html.javascript.css.processing
+"au BufRead *.html set ft=html.javascript.css.processing
+"au BufNewFile *.html set ft=html.javascript.css.processing
 
 
 " SuperTab Setting - Tab to trigger omnicompletion
@@ -285,5 +286,5 @@ if has("gui_running")
 
 	"let g:tagbar_ctags_bin=ctags-exuberant
 	":tabnew
-	set tags=tags, ./tags, ~/.vim/mytags
+	"set tags=tags, ./tags, ~/.vim/mytags
 endif
