@@ -126,7 +126,7 @@ cmap w!! w !sudo tee % >/dev/null
 
 
 autocmd FocusLost * :wa
-autocmd FileType php setlocal ts=4 sts=4 sw=4 noexpandtab
+autocmd FileType php setlocal ts=4 sts=4 sw=4 smartindent expandtab
 autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType javascript,html,css setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType jade setlocal ts=2 sts=2 sw=2 expandtab
@@ -272,6 +272,7 @@ let g:SuperTabDefaultCompletionType = "context"
 " Syntastic Settings
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=1
+let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
 
 
 if has("gui_running")
