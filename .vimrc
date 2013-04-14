@@ -289,3 +289,4 @@ if has("gui_running")
 	":tabnew
 	"set tags=tags, ./tags, ~/.vim/mytags
 endif
+
