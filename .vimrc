@@ -86,7 +86,7 @@ let g:ctrlp_extensions = ['funky']
 " Function lookup
 map <leader>gf :CtrlPFunky<cr>
 
-command! W :w
+command! W :w!
 
 map <C-h> <C-w>h
 map <C-j> <C-w>j
@@ -265,15 +265,10 @@ hi CursorLine   cterm=NONE ctermbg=black ctermfg=NONE guibg=black guifg=NONE
 "au BufNewFile *.html set ft=html.javascript.css.processing
 
 
-" SuperTab Setting - Tab to trigger omnicompletion
-"let g:SuperTabDefaultCompletionType = ''
-let g:SuperTabDefaultCompletionType = "context"
-
 " Syntastic Settings
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
-
 
 if has("gui_running")
 	" transparency range 0-100
