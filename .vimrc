@@ -1,9 +1,14 @@
 " Vundle and Bundle Configuration
 source ~/.vundlerc
 
+" Powerline install
+set rtp+=/Users/FMD/.vim/bundle/powerline/powerline/bindings/vim
+
 set encoding=utf-8
 set fileformat=unix
-set guifont=Menlo:h11
+set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h11
+"set guifont=Meslo\ LG\ S\ for\ Powerline\ RegularForPowerline:h11
+"set guifont=Menlo:h11
 
 " Colors
 syntax on
