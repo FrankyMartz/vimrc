@@ -139,6 +139,7 @@ autocmd FileType ruby,pml,erb,haml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType markdown setlocal wrap linebreak nolist
 autocmd BufNewFile,BufRead *.rss setfiletype xml
 autocmd BufNewFile,BufRead *.scss setfiletype css.scss
+au BufRead,BufNewFile *.go set filetype=go
 autocmd BufWritePost .vimrc source %
 autocmd WinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
