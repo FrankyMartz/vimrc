@@ -15,8 +15,7 @@ Bundle 'tpope/vim-git'
 
 " System
 Bundle 'Valloric/YouCompleteMe'
-Bundle 'msanders/snipmate.vim'
-Bundle 'krisleech/snipmate-snippets'
+Bundle 'UltiSnips'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
@@ -46,7 +45,6 @@ Bundle 'marijnh/tern_for_vim'
 Bundle 'othree/javascript-libraries-syntax.vim'
 
 " Processing
-Bundle 'processing-snipmate'
 Bundle 'Processing'
 Bundle 'Processing-Syntax'
 
@@ -68,3 +66,9 @@ Bundle 'chriskempson/base16-vim'
 filetype plugin indent off
 set runtimepath+=$GOROOT/misc/vim
 filetype plugin indent on " required!
+
+
+" UltiSnips and YouCompleteMe
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
