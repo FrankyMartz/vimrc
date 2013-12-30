@@ -291,3 +291,5 @@ if has("gui_running")
 	"set tags=tags, ./tags, ~/.vim/mytags
 endif
 
+" YouCompleteMe Setting
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>

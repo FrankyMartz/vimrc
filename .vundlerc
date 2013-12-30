@@ -30,10 +30,6 @@ Bundle 'godlygeek/tabular'
 Bundle 'kien/ctrlp.vim'
 Bundle 'tacahiroy/ctrlp-funky'
 
-" Python
-Bundle 'atourino/jinja.vim'
-Bundle 'vim-scripts/python_match.vim'
-
 " PHP
 Bundle 'phpcomplete.vim'
 
@@ -44,10 +40,6 @@ Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'marijnh/tern_for_vim'
 Bundle 'othree/javascript-libraries-syntax.vim'
 
-" Processing
-Bundle 'Processing'
-Bundle 'Processing-Syntax'
-
 " Apache
 Bundle 'apachelogs.vim'
 Bundle 'apachestyle'
@@ -56,6 +48,7 @@ Bundle 'apachestyle'
 Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-markdown'
 Bundle 'othree/html5.vim'
+Bundle 'lepture/vim-css'
 Bundle 'vim-stylus'
 Bundle 'rodjek/vim-puppet'
 
