@@ -30,6 +30,9 @@ Bundle 'godlygeek/tabular'
 Bundle 'kien/ctrlp.vim'
 Bundle 'tacahiroy/ctrlp-funky'
 
+" Python
+Bundle 'Python-mode-klen'
+
 " PHP
 Bundle 'phpcomplete.vim'
 
@@ -60,6 +63,9 @@ filetype plugin indent off
 set runtimepath+=$GOROOT/misc/vim
 filetype plugin indent on " required!
 
+" Python-mode-klen
+" let syntastic do its thing
+let g:pymode_lint_write=0
 
 " UltiSnips and YouCompleteMe
 let g:UltiSnipsExpandTrigger="<c-j>"
