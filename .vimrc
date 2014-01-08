@@ -16,6 +16,14 @@ syntax enable
 set t_Co=256
 colorscheme base16-eighties
 set background=dark
+if has("gui_running")
+	" transparency range 0-100
+  	set transparency=4
+endif
+
+" Ctags
+set tags=./tags;~
+autocmd BufWritePost :!ctags-proj.sh %<CR><CR>
 
 " Basic
 let mapleader = ","
@@ -137,6 +145,7 @@ autocmd FileType javascript,html,css setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType jade setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType ruby,pml,erb,haml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType markdown setlocal wrap linebreak nolist
+autocmd Filetype gitcommit setlocal spell textwidth=72
 autocmd BufNewFile,BufRead *.rss setfiletype xml
 autocmd BufNewFile,BufRead *.scss setfiletype css.scss
 au BufRead,BufNewFile *.go set filetype=go
@@ -245,7 +254,7 @@ nnoremap <S-F5> :update<Bar>!open -a Safari %:p:s?\(.\{-}/\)\{4}?http://localhos
 "autocmd FileType php nnoremap <F5> :update<Bar>!open -a Safari `echo http://localhost/${PWD\#*/*/*/*/*/}/%`<CR>
 
 " Run Python Script
-autocmd BufRead *.py nmap <F5> :!python %<CR>
+"autocmd BufRead *.py nmap <F5> :!python %<CR>
 
 " NERDTreeToggle
 nmap <F8> :NERDTreeToggle<CR>
@@ -254,7 +263,7 @@ nmap <F8> :NERDTreeToggle<CR>
 nmap <F9> :TagbarToggle<CR>
 
 " DelimitMate Esc Issue Fix
-let delimitMate_no_esc_mapping = 1
+let delimitMate_no_esc_mapping=1
 
 hi DiffAdd term=reverse cterm=bold ctermbg=darkgreen ctermfg=black
 hi DiffChange term=reverse cterm=bold ctermbg=gray ctermfg=black
@@ -270,26 +279,31 @@ hi CursorLine   cterm=NONE ctermbg=black ctermfg=NONE guibg=black guifg=NONE
 "au BufRead *.html set ft=html.javascript.css.processing
 "au BufNewFile *.html set ft=html.javascript.css.processing
 
+" Python-mode-klen
+" let syntastic do its thing
+let g:pymode_lint_write=0
 
 " Syntastic Settings
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
-
-if has("gui_running")
-	" transparency range 0-100
-  	set transparency=4
-
-	" PDV - phpDocumentor for Vim
-	source ~/.vim/bundle/PDV--phpDocumentor-for-Vim/plugin/php-doc.vim
-	inoremap <C-P> <ESC>:call PhpDocSingle()<CR>
-	nnoremap <C-P> :call PhpDocSingle()<CR>
-	vnoremap <C-P> :call PhpDocRange()<CR>
-
-	"let g:tagbar_ctags_bin=ctags-exuberant
-	":tabnew
-	"set tags=tags, ./tags, ~/.vim/mytags
-endif
+let g:syntastic_loc_list_height=5
 
 " YouCompleteMe Setting
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" UltiSnips and YouCompleteMe
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
+" vim-css-color
+" when updatetime value set by plugin (100ms) is interfering with your 
+" configuration.
+let g:cssColorVimDoNotMessMyUpdatetime=1
+
+" vim-flavored-markdown
+augroup markdown
+	au!
+	au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+augroup END
