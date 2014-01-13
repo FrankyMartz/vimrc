@@ -72,7 +72,7 @@ set showmatch " Highlight closing ), >, }, ], etc...
 set undolevels=1000
 set directory=/tmp
 set nowrap
-set textwidth=79
+set textwidth=80
 set formatoptions=qrn1
 set autoread " Make sure that buffers change if the file changed
 
@@ -145,7 +145,7 @@ autocmd FileType javascript,html,css setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType jade setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType ruby,pml,erb,haml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType markdown setlocal wrap linebreak nolist
-autocmd Filetype gitcommit setlocal spell textwidth=72
+autocmd Filetype gitcommit setlocal spell textwidth=72 cc=72
 autocmd BufNewFile,BufRead *.rss setfiletype xml
 autocmd BufNewFile,BufRead *.scss setfiletype css.scss
 au BufRead,BufNewFile *.go set filetype=go
@@ -227,18 +227,6 @@ augroup vimrc
 	au BufReadPre * setlocal foldmethod=indent
 	au BufWinEnter * if &fdm == 'indent' | setlocal foldmethod=manual | endif
 augroup END
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" PHP-CS_FIXER
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"        " define the path to the php-cs-fixer.phar
-let g:php_cs_fixer_level = "all"                " which level ?
-let g:php_cs_fixer_config = "default"           " configuration
-let g:php_cs_fixer_php_path = "php"             " Path to PHP
-let g:php_cs_fixer_fixers_list = ""             " List of fixers
-let g:php_cs_fixer_dry_run = 0                  " Call command with dry-run option
-let g:php_cs_fixer_verbose = 0                  " Return the output of command if 1, else an inline information.
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
