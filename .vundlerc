@@ -1,4 +1,3 @@
-set nocompatible 	" be iMproved
 filetype off 		" required for Vundle
 
 let g:vundle_default_git_proto = 'git'
@@ -19,6 +18,7 @@ Bundle 'UltiSnips'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
+Bundle 'Gundo'
 Bundle 'joonty/vdebug.git'
 Bundle 'surround.vim'
 Bundle 'Raimondi/delimitMate'
@@ -49,6 +49,7 @@ Bundle 'apachestyle'
 
 " Markdown
 Bundle 'tpope/vim-markdown'
+Bundle 'tpope/vim-liquid'
 Bundle 'jtratner/vim-flavored-markdown'
 
 " Other
