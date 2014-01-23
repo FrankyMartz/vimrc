@@ -28,7 +28,7 @@
 set nocompatible 				" be iMproved
 
 " Import Vundle Bundle Configuration
-source ~/.vundlerc
+source ~/.vim/vundlerc
 
 " }}}
 
@@ -658,13 +658,7 @@ nmap <F9> :TagbarToggle<CR>
 
 " NERDTree
 let NERDTreeChDirMode=2
-let NERDTreeBookmarksFile="$HOME/.vim/tmp/NERDTreeBookmarks//"
-
-" Make folder automatically if doesn't exist
-if !isdirectory(expand(NERDTreeBookmarksFile))
-	call mkdir(expand(NERDTreeBookmarksFile), "p")
-endif
-
+let NERDTreeBookmarksFile=expand("~/.vim/tmp/NERDTreeBookmarks")
 nmap <F8> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
                     \ 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json',
