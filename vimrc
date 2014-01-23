@@ -657,9 +657,13 @@ let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
 nmap <F9> :TagbarToggle<CR>
 
 " NERDTree
+augroup nerdtree
+    " Quit when NERDTree is only open buffer
+    au bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+augroup END
+nmap <F8> :NERDTreeToggle<CR>
 let NERDTreeChDirMode=2
 let NERDTreeBookmarksFile=expand("~/.vim/tmp/NERDTreeBookmarks")
-nmap <F8> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index',
                     \ 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json',
                     \ '.*\.o$', 'db.db', 'tags.bak', '.*\.pdf$', '.*\.mid$',
