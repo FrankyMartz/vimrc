@@ -159,7 +159,7 @@ hi DiffAdd term=reverse cterm=bold ctermbg=darkgreen ctermfg=black
 hi DiffChange term=reverse cterm=bold ctermbg=gray ctermfg=black
 hi DiffText term=reverse cterm=bold ctermbg=blue ctermfg=black
 hi DiffDelete term=reverse cterm=bold ctermbg=darkred ctermfg=black
-hi CursorLine   cterm=NONE ctermbg=black ctermfg=NONE guibg=black guifg=NONE
+hi CursorLine cterm=NONE ctermbg=black ctermfg=NONE guibg=black guifg=NONE
 
 " }}}
 
@@ -679,6 +679,8 @@ let g:syntastic_auto_loc_list=1
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
 let g:syntastic_loc_list_height=5
 let g:syntastic_check_on_wq=0
+"let g:syntastic_error_symbol='✗'
+"let g:syntastic_warning_symbol='⚠'
 
 " YouCompleteMe
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
