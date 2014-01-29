@@ -35,6 +35,7 @@ source ~/.vim/vundlerc
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set shell=/bin/bash             " MacVim does some weird with shell
 set autoread 					" Automatically read externally changes to file
 set history=1000				" Remember more commands and search history
 set undolevels=1000				" Use many levels of undo
