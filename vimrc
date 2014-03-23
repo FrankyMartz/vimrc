@@ -270,6 +270,21 @@ endfunction " }}}
 hi def IndentGuides guibg=#303030 ctermbg=234
 nnoremap <leader>I :call IndentGuides()<cr>
 
+function! MakeSpacelessIabbrev(from, to)
+    execute "iabbrev <silent> ".a:from." ".a:to."<C-R>=EatChar('\\s')<CR>"
+endfunction
+
+function! MakeSpacelessBufferIabbrev(from, to)
+    execute "iabbrev <silent> <buffer> ".a:from." ".a:to."<C-R>=EatChar('\\s')<CR>"
+endfunction
+
+" CodeKit doesn't handle Vim too nicely...ugh.
+function! CodeKitConfigToggle()
+    set nobackup
+    set nowritebackup
+endfunction
+:command! CodeKitConfigToggle :call CodeKitConfigToggle()
+
 "}}}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -365,9 +380,14 @@ augroup END
 " CSS {{{
 augroup ft_css
     au!
-    au FileType css setlocal ts=2 sts=2 sw=2 expandtab
+    au FileType css,scss,sass,less,stylus setlocal ts=4 sts=4 sw=4 noexpandtab
+    au BufNewFile,BufRead *.css setlocal filetype=css
     au BufNewFile,BufRead *.scss setlocal filetype=scss
     au BufNewFile,BufRead *.less setlocal filetype=less
+    au BufNewFile,BufRead *.sass setlocal filetype=sass
+    au BufNewFile,BufRead *.styl setlocal filetype=stylus
+
+    au BufReadPre *.styl :%s/\s\+$//e
 
     au Filetype less,css setlocal foldmethod=marker
     au Filetype less,css setlocal foldmarker={,}
@@ -445,6 +465,15 @@ augroup END
 " }}}
 
 
+" Blade {{{
+augroup ft_blade
+    au!
+    au Filetype *.blade.php set ft=html.laravel.blade
+    au Filetype blade setlocal ts=2 sts=2 sw=2 expandtab 
+augroup END
+" }}}
+
+
 " Jade {{{
 augroup ft_jade
     au!
@@ -465,6 +494,15 @@ augroup ft_javascript
     " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
     " positioned inside of them AND the following code doesn't get unfolded.
     au Filetype javascript inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+augroup END
+" }}}
+
+
+" Json {{{
+augroup ft_json
+    au!
+    au FileType *.json set filetype=json
+    au FileType *.jsonp set filetype=json
 augroup END
 " }}}
 
@@ -496,6 +534,7 @@ augroup END
 " PHP {{{
 augroup ft_php
     au!
+    au Filetype *.php set ft=php.laravel
     autocmd FileType php setlocal ts=4 sts=4 sw=4 smartindent expandtab
 augroup END
 " }}}
@@ -639,7 +678,7 @@ nnoremap <F7> :GundoToggle<CR>
 
 
 " Ctrl-P
-nnoremap <leader>T :CtrlP<cr>
+let g:ctrlp_map = '<c-t>'
 nnoremap <leader>. :CtrlPTag<cr>
 nnoremap <leader>b :CtrlPBuffer<cr>
 " Open multiple files in no more than 2 vertical splits
@@ -687,7 +726,7 @@ let g:syntastic_check_on_wq=0
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_collect_identifiers_from_tags_files=1
 
-" UltiSnips and YouCompleteMe
+" UltiSnips
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
@@ -701,5 +740,9 @@ let g:event_handler_attributes_complete = 0
 let g:rdfa_attributes_complete = 0
 let g:microdata_attributes_complete = 0
 let g:atia_attributes_complete = 0
+
+" PDV
+let g:pdv_template_dir=expand("~/.vim/bundle/pdv/templates_snip")
+autocmd BufRead,BufNewFile *.php nnoremap <buffer> <C-p> :call pdv#DocumentWithSnip()<CR>
 
 " }}}
