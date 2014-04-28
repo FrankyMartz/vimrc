@@ -150,10 +150,10 @@ set background=dark 			" Set colorscheme flavor
 set synmaxcol=800 				" Don't highlight lines longer than 800 chars
 set colorcolumn=80				" Column number to be highlighted
 
-set t_Co=256
-
 if has("gui_running")
   	set transparency=4			" Transparency range 0-100
+else
+    set t_Co=256
 endif
 
 hi DiffAdd term=reverse cterm=bold ctermbg=darkgreen ctermfg=black
@@ -244,17 +244,17 @@ endfunc
 
 " Promote Variable to RSpec Let
 function! PromoteToLet()
-  :normal! dd
+  normal! dd
   " :exec '?^\s*it\>'
-  :normal! P
+  normal! P
   :.s/\(\w\+\) = \(.*\)$/let(:\1) { \2 }/
-  :normal ==
+  normal ==
   " :normal! <<
   " :normal! ilet(:
   " :normal! f 2cl) {
   " :normal! A }
 endfunction
-:command! PromoteToLet :call PromoteToLet()
+command! PromoteToLet :call PromoteToLet()
 ":map <leader>p :PromoteToLet<cr>
 
 let g:indentguides_state = 0
@@ -280,10 +280,30 @@ endfunction
 
 " CodeKit doesn't handle Vim too nicely...ugh.
 function! CodeKitConfigToggle()
-    set nobackup
-    set nowritebackup
+    set backup!
+    set writebackup!
 endfunction
-:command! CodeKitConfigToggle :call CodeKitConfigToggle()
+command! CodeKitConfigToggle :call CodeKitConfigToggle()
+
+" UltiSnips completion function that tries to expand a snippet. If there's no
+" snippet for expanding, it checks for completion window and if it's
+" shown, selects first element. If there's no completion window it tries to
+" jump to next placeholder. If there's no placeholder it just returns TAB key 
+function! g:UltiSnips_Complete()
+    call UltiSnips#ExpandSnippet()
+    if g:ulti_expand_res == 0
+        if pumvisible()
+            return "\<c-n>"
+        else
+            call UltiSnips#JumpForwards()
+            if g:ulti_jump_forwards_res == 0
+                return "\<TAB>"
+            endif
+        endif
+    endif
+    return ""
+endfunction
+au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 
 "}}}
 
@@ -501,6 +521,9 @@ augroup END
 " Json {{{
 augroup ft_json
     au!
+    au Filetype json setlocal ts=2 sts=2 sw=2 expandtab
+    au Filetype json setlocal foldmethod=marker
+    au Filetype json setlocal foldmarker={,}
     au FileType *.json set filetype=json
     au FileType *.jsonp set filetype=json
 augroup END
@@ -645,15 +668,6 @@ augroup vimrc
 augroup END
 " }}}
 
-
-if has("autocmd")
-  " Restore cursor position
-  autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
-endif
-
 " }}}
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -717,7 +731,7 @@ let g:pymode_lint_write=0
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
-let g:syntastic_loc_list_height=5
+let g:syntastic_javascript_checkers=['jslint', 'jshint']
 let g:syntastic_check_on_wq=0
 "let g:syntastic_error_symbol='✗'
 "let g:syntastic_warning_symbol='⚠'
@@ -727,9 +741,15 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_collect_identifiers_from_tags_files=1
 
 " UltiSnips
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+"let g:UltiSnipsExpandTrigger="<c-j>"
+"let g:UltiSnipsJumpForwardTrigger="<c-j>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-e>"
+" this mapping Enter key to <C-y> to chose the current highlight item 
+" and close the selection list, same as other IDEs.
+" CONFLICT with some plugins like tpope/Endwise
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " vim-css-color
 " When updatetime set by plugin (100ms) is interfering with your configuration.
@@ -744,5 +764,8 @@ let g:atia_attributes_complete = 0
 " PDV
 let g:pdv_template_dir=expand("~/.vim/bundle/pdv/templates_snip")
 autocmd BufRead,BufNewFile *.php nnoremap <buffer> <C-p> :call pdv#DocumentWithSnip()<CR>
+
+" javascript-libraries-syntax
+let g:used_javascript_libs = 'jquery,underscore'
 
 " }}}
