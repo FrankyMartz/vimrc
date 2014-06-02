@@ -32,6 +32,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tacahiroy/ctrlp-funky'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'editorconfig-vim'
 
 " Python
 Plugin 'Python-mode-klen'
@@ -64,12 +65,10 @@ Plugin 'tpope/vim-liquid'
 Plugin 'jtratner/vim-flavored-markdown'
 
 " Other
-Plugin 'tpope/vim-haml'
+Plugin 'rodjek/vim-puppet'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'skammer/vim-css-color'
 Plugin 'wavded/vim-stylus'
-Plugin 'rodjek/vim-puppet'
-Plugin 'tobyS/vmustache'
 
 " Colorscheme
 Plugin 'chriskempson/base16-vim'
