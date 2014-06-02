@@ -346,6 +346,12 @@ inoremap II <Esc>I
 inoremap AA <Esc>A
 " -> make newline above and place cursor there
 inoremap OO <Esc>O
+" -> clear row and place cursor inline
+inoremap CC <Esc>cc
+
+" Split Buffer
+nnoremap <C-s> <C-w>s
+nnoremap <C-v> <C-w>v
 
 " Clear search highlighted results
 nnoremap <leader><space> :noh<cr>
@@ -707,7 +713,7 @@ let delimitMate_no_esc_mapping=1
 
 " Tagbar
 " Use Exuberant Ctags
-let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
+"let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
 nmap <F9> :TagbarToggle<CR>
 
 " NERDTree
@@ -731,7 +737,7 @@ let g:pymode_lint_write=0
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
-let g:syntastic_javascript_checkers=['jslint', 'jshint']
+let g:syntastic_javascript_checkers=['jshint']
 let g:syntastic_check_on_wq=0
 "let g:syntastic_error_symbol='✗'
 "let g:syntastic_warning_symbol='⚠'
@@ -739,27 +745,22 @@ let g:syntastic_check_on_wq=0
 " YouCompleteMe
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_collect_identifiers_from_tags_files=1
+let g:ycm_autoclose_preview_window_after_completion=1
 
 " UltiSnips
-"let g:UltiSnipsExpandTrigger="<c-j>"
-"let g:UltiSnipsJumpForwardTrigger="<c-j>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsListSnippets="<c-e>"
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsListSnippets="<c-e>"
 " this mapping Enter key to <C-y> to chose the current highlight item 
 " and close the selection list, same as other IDEs.
 " CONFLICT with some plugins like tpope/Endwise
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"inoremap <expr> <CR> pumvisible() ? \"\<C-y>" : \"\<C-g>u\<CR>"    "escaped quotes
 
 " vim-css-color
 " When updatetime set by plugin (100ms) is interfering with your configuration.
 let g:cssColorVimDoNotMessMyUpdatetime=1
-
-" HTML5
-let g:event_handler_attributes_complete = 0
-let g:rdfa_attributes_complete = 0
-let g:microdata_attributes_complete = 0
-let g:atia_attributes_complete = 0
 
 " PDV
 let g:pdv_template_dir=expand("~/.vim/bundle/pdv/templates_snip")
@@ -769,3 +770,4 @@ autocmd BufRead,BufNewFile *.php nnoremap <buffer> <C-p> :call pdv#DocumentWithS
 let g:used_javascript_libs = 'jquery,underscore'
 
 " }}}
+
