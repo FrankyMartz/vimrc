@@ -44,12 +44,16 @@ Plugin 'tobyS/pdv'
 Plugin 'markwu/vim-laravel4-snippets'
 Plugin 'xsbeats/vim-blade'
 
+" Perl
+Plugin 'perl-support.vim'
+
 " JavaScript
 Plugin 'marijnh/tern_for_vim'
 "Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
 "Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'elzr/vim-json'
+Plugin 'heavenshell/vim-jsdoc'
 
 " Go Lang
 Plugin 'jnwhiteh/vim-golang'
@@ -60,9 +64,8 @@ Plugin 'apachelogs.vim'
 Plugin 'apachestyle'
 
 " Markdown
-Plugin 'tpope/vim-markdown'
+Plugin 'gabrielelana/vim-markdown'
 Plugin 'tpope/vim-liquid'
-Plugin 'jtratner/vim-flavored-markdown'
 
 " Other
 Plugin 'rodjek/vim-puppet'

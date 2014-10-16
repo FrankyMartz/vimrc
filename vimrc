@@ -80,8 +80,8 @@ set ttimeout
 set ttimeoutlen=10
 
 " Ctags
-set tags=./tags;~
-autocmd BufWritePost :!ctags-proj.sh %<CR><CR>
+set tags=./tags,tags;/
+"autocmd BufWritePost :!ctags-proj.sh %<CR><CR>
 
 set ttyfast 					" Fast terminal connection
 set visualbell 					" no bell please
@@ -145,7 +145,7 @@ syntax enable 					" Enable syntax highlighting
 
 set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h11
 
-colorscheme base16-default
+colorscheme base16-eighties
 set background=dark 			" Set colorscheme flavor
 set synmaxcol=800 				" Don't highlight lines longer than 800 chars
 set colorcolumn=80				" Column number to be highlighted
@@ -285,25 +285,25 @@ function! CodeKitConfigToggle()
 endfunction
 command! CodeKitConfigToggle :call CodeKitConfigToggle()
 
-" UltiSnips completion function that tries to expand a snippet. If there's no
-" snippet for expanding, it checks for completion window and if it's
-" shown, selects first element. If there's no completion window it tries to
-" jump to next placeholder. If there's no placeholder it just returns TAB key 
-function! g:UltiSnips_Complete()
-    call UltiSnips#ExpandSnippet()
-    if g:ulti_expand_res == 0
-        if pumvisible()
-            return "\<c-n>"
-        else
-            call UltiSnips#JumpForwards()
-            if g:ulti_jump_forwards_res == 0
-                return "\<TAB>"
-            endif
-        endif
-    endif
-    return ""
+" Ultisnips + YCM
+" Now I only need Tab, Ctrl+J and Ctrl+K to use YCM and UlitSnips.
+
+func! g:jInYCM()
+    if pumvisible()
+        return "\<C-n>"
+    else
+        return "\<c-j>"
 endfunction
-au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+
+func! g:kInYCM()
+    if pumvisible()
+        return "\<C-p>"
+    else
+        return "\<c-k>"
+endfunction
+inoremap <c-j> <c-r>=g:jInYCM()<cr>
+au BufEnter,BufRead * exec "inoremap <silent> " . g:UltiSnipsJumpBackwordTrigger . " <C-R>=g:kInYCM()<cr>"
+let g:UltiSnipsJumpBackwordTrigger = "<c-k>"
 
 "}}}
 
@@ -537,12 +537,11 @@ augroup END
 
 
 " Markdown {{{
-
 augroup ft_markdown
 	au!
     autocmd FileType markdown setlocal wrap linebreak nolist
     " vim-flavored-markdown
-	au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+	"au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 augroup END
 " }}}
 
@@ -737,7 +736,7 @@ let g:pymode_lint_write=0
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
-let g:syntastic_javascript_checkers=['jshint']
+let g:syntastic_javascript_checkers=['jshint', 'jslint']
 let g:syntastic_check_on_wq=0
 "let g:syntastic_error_symbol='✗'
 "let g:syntastic_warning_symbol='⚠'
@@ -748,9 +747,10 @@ let g:ycm_collect_identifiers_from_tags_files=1
 let g:ycm_autoclose_preview_window_after_completion=1
 
 " UltiSnips
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+"let g:UltiSnipsExpandTrigger="<c-j>"
+"let g:UltiSnipsJumpForwardTrigger="<c-j>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
 "let g:UltiSnipsJumpForwardTrigger="<tab>"
 "let g:UltiSnipsListSnippets="<c-e>"
 " this mapping Enter key to <C-y> to chose the current highlight item 
@@ -767,7 +767,12 @@ let g:pdv_template_dir=expand("~/.vim/bundle/pdv/templates_snip")
 autocmd BufRead,BufNewFile *.php nnoremap <buffer> <C-p> :call pdv#DocumentWithSnip()<CR>
 
 " javascript-libraries-syntax
-let g:used_javascript_libs = 'jquery,underscore'
+let g:used_javascript_libs='jquery,underscore'
+
+" vim-jsdoc
+let g:jsdoc_default_mapping=0
+let g:jsdoc_allow_input_prompt=1
+nmap <leader>l :JsDoc<CR>
 
 " }}}
 
